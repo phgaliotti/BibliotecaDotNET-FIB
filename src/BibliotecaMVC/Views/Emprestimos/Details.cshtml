@@ -1,0 +1,70 @@
+@model BibliotecaMVC.Models.Emprestimo
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Emprestimo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DataDevolucao)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DataDevolucao)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DataFim)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DataFim)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DataInicio)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DataInicio)
+        </dd>
+    </dl>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Imagem</th>
+            <th>Titulo</th>
+            <th>Autor</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.LivroEmprestimos)
+        {
+			<tr>
+                <td>
+                    <img class="card-img-top" src="~/@item.Livros.Foto" width="80px" height="40px">
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Livros.Titulo)
+                </td>
+                <td>
+                    @foreach (var livroAutor in item.Livros.AutorLivros)
+                    {
+                        @Html.DisplayFor(modelItem => livroAutor.Autores.Nome)
+                        <br />
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    <a asp-action="Index">Back to List</a>
+    <br />
+	
+    @if (string.IsNullOrEmpty(Model.DataDevolucao))
+    {
+		<a asp-action="DevolverLivros" asp-route-id="@Model.EmprestimoID" class="btn btn-danger">Devolu&ccedil;&atilde;o</a>
+    }
+</div>
